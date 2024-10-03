@@ -1,3 +1,5 @@
+package lesson_1;
+
 public class QuangDuong {
     public static void main(String[] args) {
         double t = 2.25;

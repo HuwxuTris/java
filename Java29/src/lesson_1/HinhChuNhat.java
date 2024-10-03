@@ -1,3 +1,5 @@
+package lesson_1;
+
 public class HinhChuNhat {
     public static void main(String[] args) {
         int a = 10;

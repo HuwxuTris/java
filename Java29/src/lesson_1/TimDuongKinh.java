@@ -1,3 +1,5 @@
+package lesson_1;
+
 public class TimDuongKinh {
     public static void main(String[] args) {
         int DT = 113;

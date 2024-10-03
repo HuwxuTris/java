@@ -1,3 +1,5 @@
+package lesson_1;
+
 public class ToanTu3Ngoi {
     public static void main(String[] args) {
         int a = 5;
