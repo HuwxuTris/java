@@ -28,7 +28,6 @@ public class Main2 {
             email = scanner.nextLine();
         }
         else {
-
         }
 
         System.out.println("\nThông tin đã nhập:");
