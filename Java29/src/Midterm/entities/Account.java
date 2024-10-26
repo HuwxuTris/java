@@ -4,11 +4,29 @@ public class Account {
     private String username;
     private String password;
     private String email;
+    private boolean isAdmin;
+
 
     public Account(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
+    }
+
+    //use to set admin
+    public Account(String username, String password, String email, boolean isAdmin) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.isAdmin = isAdmin;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public String getUsername() {
