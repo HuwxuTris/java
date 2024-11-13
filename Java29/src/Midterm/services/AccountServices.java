@@ -12,8 +12,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AccountServices {
-
-
+    ParentServices parentServices = new ParentServices();
+    TeacherServices teacherServices = new TeacherServices();
+    StudentServices studentServices = new StudentServices();
     public boolean isUsernameExists(String username) {
         for (Account account : Database.accounts.values()) {
             if (account.getUsername().equals(username)) {
@@ -83,12 +84,12 @@ public class AccountServices {
             System.out.println("Registered Successfully as " + getRoleName(role));
 
             if (role == 2) {
-                addStudentDetails(username, email);
+                studentServices.addStudentDetails(username, email);
             } else if (role == 3) {
-                addParentDetails(username, email);
+                parentServices.addParentDetails(username, email);
             }
             else if(role == 1){
-                addTeacherDetails(username,email);
+                teacherServices.addTeacherDetails(username,email);
             }
 
         }
@@ -104,94 +105,7 @@ public class AccountServices {
         }
     }
 
-    private void addStudentDetails(String username, String email) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter origin: ");
-        String origin = scanner.nextLine();
-        Speciality speciality = null;
-        while (speciality == null) {
-            System.out.println("Enter speciality (Choose from): ");
-            for (Speciality s : Speciality.values()) {
-                System.out.println("- " + s);
-            }
-            String specialityInput = scanner.nextLine().toUpperCase();
 
-            try {
-                speciality = Speciality.valueOf(specialityInput);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid speciality. Please enter a valid option.");
-            }
-        }
-        LocalDate dob = null;
-
-        while (dob == null) {
-            System.out.print("Please enter your date of birth (YYYY-MM-DD): ");
-            String dobInput = scanner.nextLine();
-
-            try {
-                dob = LocalDate.parse(dobInput, DateTimeFormatter.ISO_LOCAL_DATE);
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid format. Please enter the date in the format YYYY-MM-DD.");
-            }
-        }
-
-        Student student = new Student(username, name, origin, email, speciality,dob);
-        Database.getStudents().put(username, student); // Add student to Database map
-        System.out.println("Student details saved.");
-    }
-
-    private void addParentDetails(String username, String email) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter child's email: ");
-        String childEmail = scanner.nextLine();
-
-        Parent parent = new Parent(username, name, email, childEmail);
-        Database.getParents().put(username, parent); // Add parent to Database map
-        System.out.println("Parent details saved.");
-    }
-
-    private void addTeacherDetails(String username, String email) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter origin: ");
-        String origin = scanner.nextLine();
-        System.out.print("Enter speciality: ");
-        Speciality speciality = null;
-        while (speciality == null) {
-            System.out.println("Enter speciality (Choose from): ");
-            for (Speciality s : Speciality.values()) {
-                System.out.println("- " + s);
-            }
-            String specialityInput = scanner.nextLine().toUpperCase();
-
-            try {
-                speciality = Speciality.valueOf(specialityInput);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid speciality. Please enter a valid option.");
-            }
-        }
-        LocalDate dob = null;
-
-        while (dob == null) {
-            System.out.print("Please enter your date of birth (YYYY-MM-DD): ");
-            String dobInput = scanner.nextLine();
-
-            try {
-                dob = LocalDate.parse(dobInput, DateTimeFormatter.ISO_LOCAL_DATE);
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid format. Please enter the date in the format YYYY-MM-DD.");
-            }
-        }
-
-        Teacher teacher = new Teacher(username, name, origin, email, speciality,dob);
-        Database.getTeachers().put(username, teacher);
-        System.out.println("Student details saved.");
-    }
 
 
     // Login Part
@@ -214,7 +128,7 @@ public class AccountServices {
         return true;
     }
 
-    private void handlePasswordOptions(Account account) {
+    public void handlePasswordOptions(Account account) {
         Scanner scanner = new Scanner(System.in);
         boolean validOption = false;
 

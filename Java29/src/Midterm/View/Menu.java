@@ -2,12 +2,17 @@ package Midterm.View;
 
 import Midterm.entities.Account;
 import Midterm.services.AccountServices;
+import Midterm.services.AdminServices;
+import Midterm.services.StudentServices;
+import Midterm.services.TeacherServices;
 
 import java.util.Scanner;
 
 public class Menu {
     AccountServices accountServices = new AccountServices();
-
+    AdminServices adminServices = new AdminServices();
+    TeacherServices teacherServices = new TeacherServices();
+    StudentServices studentServices = new StudentServices();
     public void displayMenu(Scanner scanner) {
         while (true) {
             System.out.println("1 - Login");
@@ -89,7 +94,7 @@ public class Menu {
                             accountServices.viewAccountByRole();
                             break;
                         case 2:
-                            createTeacherAccount(scanner);
+                            adminServices.createTeacherAccount(scanner);
                             break;
                         case 3:
                             System.out.println("Input the username of the account");
@@ -108,25 +113,38 @@ public class Menu {
                 case 1:
                     System.out.println("This is teacher menu");
                     System.out.println("0. Log out");
+                    System.out.println("1. Get student list on speciality");
 
                     int teacherOption = Integer.parseInt(scanner.nextLine());
-                    if (teacherOption == 0) {
-                        System.out.println("Logged out");
-                        loggedIn = false;
-                    } else {
-                        System.out.println("Invalid option");
+                    switch (teacherOption) {
+                        case 0:
+                            System.out.println("Logged out");
+                            loggedIn = false;
+                            break;
+                        case 1:
+                            teacherServices.getListOnSpeciality(scanner);
+                            break;
+                        default:
+                            System.out.println("Invalid option");
+                            break;
                     }
-                    break;
+                break;
                 case 2:
                     System.out.println("This is student menu");
                     System.out.println("0. Log out");
 
+
                     int studentOption = Integer.parseInt(scanner.nextLine());
-                    if (studentOption == 0) {
-                        System.out.println("Logged out");
-                        loggedIn = false;
-                    } else {
-                        System.out.println("Invalid option");
+                    switch (studentOption) {
+                        case 0:
+                            System.out.println("Logged out");
+                            loggedIn = false;
+                            break;
+                        case 1:
+                            break;
+                        default:
+                            System.out.println("Invalid option");
+                            break;
                     }
                     break;
                 case 3:
@@ -134,31 +152,20 @@ public class Menu {
                     System.out.println("0. Log out");
 
                     int parentOption = Integer.parseInt(scanner.nextLine());
-                    if (parentOption == 0) {
-                        System.out.println("Logged out");
-                        loggedIn = false;
-                    } else {
-                        System.out.println("Invalid option");
+                    switch (parentOption) {
+                        case 0:
+                            System.out.println("Logged out");
+                            loggedIn = false;
+                            break;
+                        case 1:
+                            break;
+                        default:
+                            System.out.println("Invalid option");
+                            break;
                     }
-                    break;
-                default:
-                    System.out.println("Unknown role.");
-                    loggedIn = false;
                     break;
             }
         }
-    }
 
 
-    public void createTeacherAccount(Scanner scanner) {
-        System.out.println("Welcome to Register:");
-        System.out.print("Enter teacher's username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter password: ");
-        String password = scanner.nextLine();
-        System.out.print("Enter email: ");
-        String email = scanner.nextLine();
-        accountServices.registerUser(username, password, email, 1);
-    }
-
-}
+    }}
